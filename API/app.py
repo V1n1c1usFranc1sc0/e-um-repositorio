@@ -157,7 +157,7 @@ try:
     @app.route('/column/fetchcolumn/<int:project_id>', methods=['GET'])
     def fetch_column(project_id):
         cur.execute(('select * from public."column" where project_id = %s'),(project_id,))
-        return jsonify(cur.fetchall)
+        return jsonify(cur.fetchall())
 
 
     #deletar coluna
@@ -192,7 +192,7 @@ try:
         column_id = request.args.get('column_id', None)
 
         cur.execute(('select * from public.task where project_id = %s and column_id = %s'),(project_id,column_id))
-        return jsonify(cur.fetchall)
+        return jsonify(cur.fetchall())
 
     #deletar tarefa
     @app.route('/task/delete/<int:task_id>', methods=['DELETE'])
