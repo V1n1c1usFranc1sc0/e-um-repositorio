@@ -129,6 +129,86 @@ try:
         return jsonify(body)
 
     #remover membro
+    @app.route('/member/delete/<int:member_id>', methods=['DELETE'])
+    def delete_member(member_id):
+        cur.execute(('select * from public."member" where member_id = %s'),(member_id,))
+        size = cur.fetchall()
+        if len(size) > 0:
+            cur.execute(('delete from public."member" where member_id = %s'),(member_id,))
+            conn.commit()
+            return jsonify('membro removido')
+        else:
+            return jsonify('membro nao encontrado')
+
+
+
+    #criar coluna
+    @app.route('/column/addcolumn/', methods=['POST'])
+    def add_column():
+        project_id = request.args.get('project_id', None)
+        column_name = request.args.get('column_name', None)
+
+        cur.execute(('insert into public."column" (project_id, column_name) values (%s, %s)'), (project_id,column_name))
+        conn.commit()
+        return jsonify('coluna criada')
+    
+
+    #consultar coluna
+    @app.route('/column/fetchcolumn/<int:project_id>', methods=['GET'])
+    def fetch_column(project_id):
+        cur.execute(('select * from public."column" where project_id = %s'),(project_id,))
+        return jsonify(cur.fetchall)
+
+
+    #deletar coluna
+    @app.route('/column/delete/<int:column_id>', methods=['DELETE'])
+    def delete_column(column_id):
+        cur.execute(('select * from public."column" where column_id = %s'),(column_id,))
+        size = cur.fetchall()
+        if len(size) > 0:
+            cur.execute(('delete from public."column" where column_id = %s'),(column_id,))
+            conn.commit()
+            return jsonify('coluna removida')
+        else:
+            return jsonify('coluna nao encontrada')
+        
+
+    #criar tarefa
+    @app.route('/task/addtask/', methods=['POST'])
+    def add_task():
+        project_id = request.args.get('project_id', None)
+        column_id = request.args.get('column_id', None)
+        task_description = request.args.get('task_description', None)
+
+        cur.execute(('insert into public.task (project_id, column_id, task_description) values (%s, %s, %s)'),(project_id, column_id, task_description))
+        conn.commit()
+        return jsonify('tarefa criada')
+
+
+    #consultar tarefa
+    @app.route('/task/fetchtask/', methods=['GET'])
+    def fetch_task():
+        project_id = request.args.get('project_id', None)
+        column_id = request.args.get('column_id', None)
+
+        cur.execute(('select * from public.task where project_id = %s and column_id = %s'),(project_id,column_id))
+        return jsonify(cur.fetchall)
+
+    #deletar tarefa
+    @app.route('/task/delete/<int:task_id>', methods=['DELETE'])
+    def delete_task(task_id):
+        cur.execute(('select * from public.task where task_id = %s'),(task_id,))
+        size = cur.fetchall()
+        if len(size) > 0:
+            cur.execute(('delete from public.task where task_id = %s'),(task_id,))
+            conn.commit()
+            return jsonify('tarefa removida')
+        else:
+            return jsonify('tarefa nao encontrada')
+
+
+        
+
 
     app.run(port=5000,host='localhost',debug=True)
 
