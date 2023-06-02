@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Board de Kanban</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="drag.js" defer></script>
+    <script src="todo.js" defer></script>
+  </head>
+  <body>
+    <div class="board">
+        <div class="tittle">
+            <h1>Board de Kanban</h1>
+        </div>
+        
+      <form id="todo-form">
+        <input type="text" placeholder="Adicione uma tarefa" id="todo-input" />
+        <button type="submit">Add +</button>
+      </form>
+      
+      <div class="lanes">
+        <div class="swim-lane" id="todo-lane">
+          <h3 class="heading">Backlog</h3>
+          <p class="description">Tasks que serão feitas na próxima sprint</p>
+
+          <p class="task" draggable="true" >Corrigir BUG de botão que some</p>
+          <p class="task" draggable="true">Subir página de regras em produção</p>
+          <p class="task" draggable="true">Subir página de perguntas em DEV</p>
+        </div>
+
+        <div class="swim-lane">
+          <h3 class="heading">Sprint atual</h3>
+          <p class="description">Tasks que serão feitas nessa sprint</p>
+          <p class="task" draggable="true">Atualização do pacote .NET</p>
+        </div>
+
+        <div class="swim-lane">
+          <h3 class="heading">Com impedimento</h3>
+          <p class="description">Tasks que possuem impedimento</p>
+          <p class="task" draggable="true">
+            Criação dos testes de automação da página de regras
+          </p>
+        </div>
+
+        <div class="swim-lane">
+            <h3 class="heading">Completas</h3>
+            <p class="description">Tasks completas, já testadas</p>
+            <p class="task" draggable="true">
+                Atualizar plano de build da página de perguntas
+            </p>
+          </div>
+
+          
+      </div>
+    </div>
+  </body>
+</html>
